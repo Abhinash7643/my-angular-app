@@ -17,6 +17,14 @@ export class RecipeListComponent implements OnInit {
      private route : ActivatedRoute) { }
 
   ngOnInit() {
+
+    //we are adding recipe from recipe edit component and after adding we are emitting event
+    //that we are listining here to get updated  Recipe List
+    this.recipeService.recipesChanged.subscribe(
+      (recipe : Recipe[])=>{
+        this.recipes = recipe;
+      }
+    )
     this.recipes = this.recipeService.getRecipe();
   }
 
@@ -24,6 +32,8 @@ export class RecipeListComponent implements OnInit {
     this.router.navigate(['new'], {relativeTo : this.route}) //since we are already on /recipe so we are using repative route
                                    //so we need to inform router about current route using relative to
   }
+
+
 
 
 }
