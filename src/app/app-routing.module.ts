@@ -5,6 +5,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { RecipestartComponent } from './recipes/recipestart/recipestart.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeResolverService } from './recipes/recipe-resolver.service';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
     children :[
       {path : '', component : RecipestartComponent},
       {path : 'new', component : RecipeEditComponent}, //if we place this component after :id one then angular will take new as id and throw error
-      {path : ':id', component : RecipeDetailComponent},
+     //resolver is added and when this route is activated data gets loaded through resolver
+      {path : ':id', component : RecipeDetailComponent, resolve : [RecipeResolverService]},
       {path : ':id/edit', component : RecipeEditComponent}
     ]},
   {path : 'shopping-list', component : ShoppingListComponent},     //we are checking load this if complete path is empty
