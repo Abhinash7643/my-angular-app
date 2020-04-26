@@ -6,10 +6,12 @@ import { RecipestartComponent } from './recipes/recipestart/recipestart.componen
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeResolverService } from './recipes/recipe-resolver.service';
+import { AuthComponent } from './auth/auth/auth.component';
 
 
 const routes: Routes = [
   {path : '', redirectTo : '/recipes', pathMatch : 'full'},//since empty path is common for each path so
+  //we are checking load this if complete path is empty   so used pathMatch =full
   {path : 'recipes', component : RecipesComponent,
     children :[
       {path : '', component : RecipestartComponent},
@@ -18,7 +20,8 @@ const routes: Routes = [
       {path : ':id', component : RecipeDetailComponent, resolve : [RecipeResolverService]},
       {path : ':id/edit', component : RecipeEditComponent}
     ]},
-  {path : 'shopping-list', component : ShoppingListComponent},     //we are checking load this if complete path is empty
+  {path : 'shopping-list', component : ShoppingListComponent},
+  { path: 'auth', component: AuthComponent }
 ];
 
 @NgModule({
