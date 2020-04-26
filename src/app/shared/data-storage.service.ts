@@ -27,6 +27,26 @@ export class DataStorageService {
         });
     }
 
+    fetchRecipes() {
+      return this.http.
+           get<Recipe[]>(
+              'https://my-angular-app-428fe.firebaseio.com/recipes.json'
+             ).pipe(
+                map(recipes => {
+                return recipes.map(recipe => {
+                  return {
+                    ...recipe,
+                    ingredients: recipe.ingredients ? recipe.ingredients : []
+                  };
+                });
+              }),
+              tap(recipes => {
+                this.recipeService.setRecipe(recipes);
+              })
+            );
+    }
+
+
 
 
     //chaining of observable
@@ -34,30 +54,32 @@ export class DataStorageService {
     //take is used to get one value from observable the it should unsubscribe automatically
     //it waits for first observable to complete then execute second observable
     //after first observable complete it unsubscribe so later we will have one observable
-    fetchRecipes() {
-      return this.authService.user.pipe(
-        take(1),
-        exhaustMap(user => {
-          return this.http.get<Recipe[]>(
-            'https://my-angular-app-428fe.firebaseio.com/recipes.json',
-            {
-              params: new HttpParams().set('auth', user.token)
-            }
-          );
-        }),
-        map(recipes => {
-          return recipes.map(recipe => {
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : []
-            };
-          });
-        }),
-        tap(recipes => {
-          this.recipeService.setRecipe(recipes);
-        })
-      );
-    }
+//later params is moved to interceptor
+
+    // fetchRecipes() {
+    //   return this.authService.user.pipe(
+    //     take(1),
+    //     exhaustMap(user => {
+    //       return this.http.get<Recipe[]>(
+    //         'https://my-angular-app-428fe.firebaseio.com/recipes.json',
+    //         {
+    //           params: new HttpParams().set('auth', user.token)
+    //         }
+    //       );
+    //     }),
+    //     map(recipes => {
+    //       return recipes.map(recipe => {
+    //         return {
+    //           ...recipe,
+    //           ingredients: recipe.ingredients ? recipe.ingredients : []
+    //         };
+    //       });
+    //     }),
+    //     tap(recipes => {
+    //       this.recipeService.setRecipe(recipes);
+    //     })
+    //   );
+    // }
 
 
 
