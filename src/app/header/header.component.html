@@ -6,14 +6,19 @@
 
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a routerLink = "/recipes" routerLinkActive ="active">Recipes</a></li>
-        <li routerLinkActive="active">
+        <li routerLinkActive ="active" *ngIf = "isLoggedIn">
+          <a routerLink = "/recipes">Recipes</a>
+        </li>
+        <li routerLinkActive="active" *ngIf = "!isLoggedIn">
           <a routerLink="/auth">Authenticate</a>
         </li>
         <li><a routerLink = "/shopping-list" routerLinkActive ="active">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropwown>
+        <li *ngIf = "isLoggedIn">
+          <a style="cursor: pointer;" >Logout</a>
+        </li>
+        <li class="dropdown" appDropwown *ngIf = "isLoggedIn">
           <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a style="cursor: pointer;" (click) = "onSaveData()">Save Data</a></li>
