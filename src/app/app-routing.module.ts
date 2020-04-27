@@ -7,12 +7,15 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeResolverService } from './recipes/recipe-resolver.service';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 
 
 const routes: Routes = [
   {path : '', redirectTo : '/recipes', pathMatch : 'full'},//since empty path is common for each path so
   //we are checking load this if complete path is empty   so used pathMatch =full
-  {path : 'recipes', component : RecipesComponent,
+  {path : 'recipes',
+  component : RecipesComponent,
+  canActivate : [AuthGuard],
     children :[
       {path : '', component : RecipestartComponent},
       {path : 'new', component : RecipeEditComponent}, //if we place this component after :id one then angular will take new as id and throw error
